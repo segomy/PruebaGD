@@ -34,7 +34,16 @@ namespace PruebaGD.Controllers
             ViewBag.ListCategoria = new SelectList(ListCategoria, "CodigoCategoria", "Nombre");
 
 
-
+            var Ventas = (from v in ventas
+                          join p in productos on v.CodigoProducto equals p.CodigoProducto
+                                 join c in categorias on p.CodigoCategoria equals c.CodigoCategoria
+                                 where v.Fecha.Year == 2019 && c.CodigoCategoria == CodigoCategoriaParm
+                          select new 
+                              {
+                                  Nombre = p.Nombre,
+                                  Fecha = v.Fecha
+                              }).ToList(); 
+            ViewBag.Ventas = Ventas;
             return View();
         }
 
