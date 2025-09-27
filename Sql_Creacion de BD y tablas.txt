@@ -1,0 +1,118 @@
+Create DataBase PruebaGD;
+
+use PruebaGD;
+
+Create table Categoria(
+    CodigoCategoria int identity(1,1) primary key,
+    Nombre varchar(60) not null
+)
+
+Create table Producto(
+    CodigoProducto int identity(1,1) primary key,
+    Nombre varchar(100) not null,
+    CodigoCategoria int not null,
+    foreign key (CodigoCategoria) references Categoria(CodigoCategoria)
+)
+
+Create table Ventas(
+    CodigoVenta int identity(1,1) primary key,
+    Fecha Date not null,
+    CodigoProducto int not null,
+    foreign key (CodigoProducto) references Producto(CodigoProducto)
+)
+
+insert into Categoria (Nombre) values 
+    ('ELECTRONICA'), ('ZAPATERIA'), ('JUGUETERIA'), ('DEPORTES'), ('LIBRERIA'), ('INMUEBLES'), ('HOGAR'), ('ACCESORIOS'), ('TELEFONIA'), ('MEDICINA'), ('PERFUMERIA'), ('VIDEOJUEGOS') 
+
+select * from Categoria
+
+insert into Producto (Nombre,CodigoCategoria) values
+    ('LAPTOP HP 15', 1), ('TENIS NIKE', 2), ('TIRANSOARIO REX 10CM', 3), ('GUANTE BASEBALL PEQUEÑO', 4), ('SET CRAYONES PASTEL', 5), ('LAMPARA DE BRONCE', 6), ('CUADRO PHOTO 20CM',7),
+    ('PLUMILLAS PARA CARRO', 8), ('SAMSUMG A35', 9), ('MEDICIANA NATURAL PARA ACNE', 10), ('ANTONIO BANDERAS 400ML', 11), ('NINTENDO SWICH',12 )
+
+SELECT * FROM Producto
+
+With Años as (
+    select 2015 as Año union all
+    select 2016 union all
+    select 2017 union all
+    select 2018 union all
+    select 2019 union all
+    select 2020
+),
+FechasBase as (
+    select '01-11' as MesDia union all
+    select '02-27' union all
+    select '03-27' union all
+    select '04-17' union all
+    select '05-10' union all
+    select '06-01' union all
+    select '07-21' union all
+    select '08-07' union all
+    select '09-19' union all
+    select '10-15' union all
+    select '11-27' union all
+    select '12-31'
+),
+Productos as (
+    select 1 as CodigoProducto union all
+    select 2 union all
+    select 3 union all
+    select 4 union all
+    select 5 union all
+    select 6 union all
+    select 7 union all
+    select 8 union all
+    select 9 union all
+    select 10 union all
+    select 11 union all
+    select 12
+)
+insert into Ventas (Fecha, CodigoProducto)
+select 
+    CAST(CONCAT(a.Año, '-', f.MesDia) as DATE) as Fecha,
+    p.CodigoProducto
+from Años a
+cross join FechasBase f
+cross join Productos p
+
+select * from Ventas
+
+
+select top(1) a.fecha,c.Nombre
+from Ventas a
+    join Producto b on a.codigoproducto = b.codigoproducto
+    join Categoria c on c.CodigoCategoria = b.CodigoCategoria
+order by a.fecha desc
+
+select c.CodigoCategoria,c.nombre
+from Ventas a
+    join Producto b on a.codigoproducto = b.codigoproducto
+    join Categoria c on c.CodigoCategoria = b.CodigoCategoria
+where Year(a.fecha) = 2019 
+group by c.CodigoCategoria,c.nombre
+order by a.fecha desc
+
+select b.nombre,a.fecha
+from Ventas a
+    join Producto b on a.codigoproducto = b.codigoproducto
+    join Categoria c on c.CodigoCategoria = b.CodigoCategoria
+where Year(a.fecha) = 2019 
+and c.CodigoCategoria = 2
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
