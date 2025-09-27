@@ -1,0 +1,53 @@
+﻿@model IEnumerable<PruebaGD.Models.Venta>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+@ViewBag.ListCategoria
+<form asp-action="Index" method="get">
+    <label class="control-label">Lista Categorias</label>
+        <select name="CodigoCategoriaParm"> asp-items="@ViewBag.ListCategoria" class="form-control">
+            <option value="">-- Seleccione Categoria --</option>
+        </select>
+</form>
+@* 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoProductoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoProductoNavigation.CodigoProducto)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CodigoVenta">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CodigoVenta">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CodigoVenta">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
